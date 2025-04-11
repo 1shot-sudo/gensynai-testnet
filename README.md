@@ -64,34 +64,29 @@ Kết quả hiển thị là thành công nếu gồm các thông tin:
 Driver Version: 5xx.xx
 CUDA Version: 12.x
 
-**5. Tạo `screen` session**
-```bash
-screen -S gensyn
-```
-**6. Chạy node**
-- Clone git
+**5. Clone git**
 ```bash
 cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git
 cd rl-swarm
 ```
-**7. Tạo Screen session**
+**6. Tạo Screen session**
 ```bash
 screen -S gensyn
 ```
-**8. Kích hoạt venv**
+**7. Kích hoạt venv**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
-**9. Cấu hình gpu_memory_utilization (OPTIONAL)**
-Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks => cần điều chỉnh cấu hình của gpu_memory_utilization 
-Từ thư mục hệ thống ~/rl-swarm$, nhấn lệnh sau:
+**8. Cấu hình gpu_memory_utilization (OPTIONAL)**
+- Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks => cần điều chỉnh cấu hình của gpu_memory_utilization 
+- Từ thư mục hệ thống ~/rl-swarm$, nhấn lệnh sau:
 ```bash
 nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
 ```
-Tìm đến dòng gpu_memory_utilization, chỉnh từ 0.2 thành 0.4 hoặc 0.5
-Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
-**10. Chạy node**
+- Tìm đến dòng gpu_memory_utilization, chỉnh từ 0.2 thành 0.4 hoặc 0.5
+- Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
+**9. Chạy node**
 ```bash
 ./run_rl_swarm.sh
 ```
@@ -101,11 +96,11 @@ Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
 
 ![Screenshot 2025-04-01 061641](https://github.com/user-attachments/assets/b5ed9645-16a2-4911-8a73-97e21fdde274)
 
-11. **Detach from `screen session`**
+10. **Detach from `screen session`**
 - Use `Ctrl + A` and then press `D` to detach from this screen session.
 
  ## 🔄️ Back up `swarm.pem`
-Mục đích: Sau khi Node Gensyn chạy, thì việc lưu file swarm.pem để backup là rất quan trọng. Nếu không, khi khởi động lại node thì sẽ mất hết toàn bộ dữ liệu đã chạy.
+- Mục đích: Sau khi Node Gensyn chạy, thì việc lưu file swarm.pem để backup là rất quan trọng. Nếu không, khi khởi động lại node thì sẽ mất hết toàn bộ dữ liệu đã chạy.
 
 - 1. Mở `Windows Powershell`
 - Gõ lệnh dưới đây:
