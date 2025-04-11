@@ -1,40 +1,94 @@
-<h2 align=center>Gensyn Testnet Node Guide</h2>
+<h2 align=center>Gensyn Testnet Node Guide chạy bằng WSL máy cá nhân</h2>
 
-## 💻 System Requirements
+## 💻 Yêu cầu hệ thống
 
-| Requirement                         | Details                                                     |
+| Yêu cầu                             | Chi tiết                                                    |
 |-------------------------------------|-------------------------------------------------------------|
 | **CPU Architecture**                | `arm64` or `amd64`                                          |
 | **Recommended RAM**                 | 24 GB                                                       |
 | **CUDA Devices (Recommended)**      | `RTX 3090`, `RTX 4070`, `RTX 4090`, `A100`, `H100`          |
-| **Python Version**                  | Python >= 3.10 (For Mac, you may need to upgrade)           |
+| **Python Version**                  | Python >= 3.10 (Với MAC thì cần nâng cấp)                   |
 
 
 ## 📥 Hướng dẫn cài đặt
 
-1. **Cài đặt `sudo`**
+**1. Cài đặt `sudo`**
 ```bash
 sudo apt update && apt install -y
 ```
-2. **Cài đặt các dependencies khác**
+**2. Cài đặt các dependencies khác**
 ```bash
 sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl wget screen git lsof nano unzip
 ```
-3. **Cài đặt Node.js and npm**  
+**3. Cài đặt Node.js and npm**  
 ```bash
 curl -sSL https://raw.githubusercontent.com/zunxbt/installation/main/node.sh | bash
 ```
-4. **Tạo `screen` session**
+**4. Tạo `screen` session**
 ```bash
 screen -S gensyn
 ```
-5. **Chạy node**
+**5. Chạy node**
+- Clone git
 ```bash
-cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git && chmod +x gensyn-testnet/gensyn.sh && ./gensyn-testnet/gensyn.sh
+cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git
+cd rl-swarm
 ```
-- It will ask some questions, you should send response properly
-- ```Would you like to push models you train in the RL swarm to the Hugging Face Hub? [y/N]``` : Write `N`
-- When you will see interface like this, you can detach from this screen session
+**6. Tạo Screen session**
+```bash
+screen -S gensyn
+```
+**7. Kích hoạt venv**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+**8. Cài đặt nvidia-msi DRIVER (Trường hợp chạy bằng GPU nhưng WSL chưa nhận). (OPTIONAL)**
+Chọn 1 trong các lệnh sau tùy theo phiên bản GPU 
+```bash
+sudo apt install nvidia-utils-525         # version 525.147.05-0ubuntu1, or
+```
+```bash
+sudo apt install nvidia-utils-525-server  # version 525.147.05-0ubuntu1
+```
+```bash
+sudo apt install nvidia-utils-470         # version 470.256.02-0ubuntu0.24.04.1
+```
+```bash
+sudo apt install nvidia-utils-470-server  # version 470.256.02-0ubuntu0.24.04.1
+```
+```bash
+sudo apt install nvidia-utils-535         # version 535.183.01-0ubuntu0.24.04.1
+```
+```bash
+sudo apt install nvidia-utils-535-server  # version 535.230.02-0ubuntu0.24.04.3
+```
+```bash
+sudo apt install nvidia-utils-550         # version 550.120-0ubuntu0.24.04.1
+```
+```bash
+sudo apt install nvidia-utils-565-server  # version 565.57.01-0ubuntu0.24.04.3
+```
+```bash
+sudo apt install nvidia-utils-570-server  # version 570.86.15-0ubuntu0.24.04.4
+```
+```bash
+sudo apt install nvidia-utils-550-server  # version 550.144.03-0ubuntu0.24.04.1
+```
+**9. Cấu hình gpu_memory_utilization (OPTIONAL)**
+Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks. Try increasing gpu_memory_utilization when initializing the engine. Thì cần tăng chỉ số mặc định gpu_memory_utilization từ 0.2 lên 0.5 
+Từ thư mục hệ thống ~/rl-swarm$, nhấn lệnh sau:
+```bash
+nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
+```
+Tìm đến dòng gpu_memory_utilization, chỉnh từ 
+ Chạy node
+```bash
+./run_rl_swarm.sh
+```
+- Hệ thống sẽ yêu cầu trả lời một vài câu hỏi => trả lời để tiếp tục
+- ```Would you like to push models you train in the RL swarm to the Hugging Face Hub? [y/N]``` : Viết `N`
+- Khi xuất hiện thông tin như hình bên dưới nghĩa là đã chạy node thành công
 
 ![Screenshot 2025-04-01 061641](https://github.com/user-attachments/assets/b5ed9645-16a2-4911-8a73-97e21fdde274)
 
@@ -42,85 +96,64 @@ cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-
 - Use `Ctrl + A` and then press `D` to detach from this screen session.
 
  ## 🔄️ Back up `swarm.pem`
-After running the Gensyn node, it is essential to back up the swarm.pem file from your remote server (GPU or VPS) to your local PC. If you lose this file, your contribution will also be lost. Some GPU servers do not support SCP or SFTP, so I will provide distinct methods — one specifically for GPU servers and another for VPS.
+Mục đích: Sau khi Node Gensyn chạy, thì việc lưu file swarm.pem để backup là rất quan trọng. Nếu không, khi khởi động lại node thì sẽ mất hết toàn bộ dữ liệu đã chạy.
 
-### 1. Back up `swarm.pem` from GPU server to local PC
-- For this, you must need to connect to GPU server using [SSH](https://github.com/zunxbt/gensyn-testnet?tab=readme-ov-file#-connect-via-ssh) (Recommened to do these stuffs on Command Prompt or Power Shell)
-- Now exit from this GPU server using this command
+- 1. Mở `Windows Powershell`
+- Gõ lệnh dưới đây:
 ```
-exit
+copy "\\wsl$\Ubuntu\home\WSL-USERNAME\rl-swarm\swarm.pem" "PC-PATH"
 ```
-- Now replace `SSH-COMMAND` in the below command with the command which your received from provider, then replace `YOUR-PC-PATH` where you want to download this swarm.pem file and then execute it on your Command prompt or Power shell
+Trong đó: WSL-USERNAME: USERNAME trong WSL; PC-PATH: Nơi muốn lưu file backup
+- Trường hợp của mình thì lệnh sẽ có dạng thế này
 ```
-SSH-COMMAND "cat ~/rl-swarm/swarm.pem" > "YOUR-PC-PATH\swarm.pem"
+copy "\\wsl$\Ubuntu\home\one\rl-swarm\swarm.pem" "D:\Backup"
 ```
-- In my case, this command looks like this :
-```
-ssh -p 69 root@69.69.69.69 "cat ~/rl-swarm/swarm.pem" > "C:\Users\USER\Downloads\swarm.pem"
-```
-- Done, your `swarm.pem` file is now saved on your local system
+ ## 🔄️ Recover `swarm.pem`
+Mục đích: Tiếp tục chạy node Peer ID cũ (Gồm toàn bộ contribution trước đây), hoặc sửa lỗi Daemon failed to start in 15.0 seconds
 
-### 2. Back up `swarm.pem` from VPS server to local PC
-- For this, I recommend to use `Command Prompt` or `Power Shell`
-- If you are using **Command Prompt** then use the below commmand, make sure to replace `VPS-USERNAME` , `VPS-IP`and `YOUR-PC-PATH` (where you want to save swarm.pem file) with actual value
+1. Xóa file swarm.pem hiện tại (nếu có)
+- Gõ lệnh dưới đây
 ```
-scp VPS-USERNAME@VPS-IP:~/rl-swarm/swarm.pem "YOUR-PC-PATH"
+cd rl-swarm
+rm ~/rl-swarm/swarm.pem
 ```
-- In my case this command looks like this :
+2. Copy file backup vào folder rl-swarm
+- Gõ lệnh dưới đây
 ```
-scp root@69.69.69.69:~/rl-swarm/swarm.pem "C:\Users\USER\Downloads"
+cp /mnt/PC-PATH/swarm.pem ~/rl-swarm/swarm.pem
 ```
-- If you are using **Powershell** then use the below commmand, make sure to replace `VPS-USERNAME` , `VPS-IP`and `YOUR-PC-PATH`(where you want to save swarm.pem file) with actual value
+Trong đó: PC-PATH là nơi đã lưu file backup phía trên
+- Trường hợp của mình thì lệnh sẽ có dạng thế này
 ```
-scp VPS-USERNAME@VPS-IP:~/rl-swarm/swarm.pem 'YOUR-PC-PATH'
-```
-- In my case this command looks like this :
-```
-scp root@69.69.69.69:~/rl-swarm/swarm.pem 'C:\Users\USER\Downloads'
+cp /mnt/d/backup/swarm.pem ~/rl-swarm/swarm.pem
 ```
 
-### 3. Back up `swarm.pem` from WSL to local PC
-- First, open `Command Prompt` or `Windows Powershell`
-- Then use the below command, make sure to replace `YOUR-WSL-USERNAME` `YOUR-PC-PATH`(where you want to save swarm.pem file) with actual value
-```
-copy "\\wsl$\Ubuntu\home\YOUR-WSL-USERNAME\rl-swarm\swarm.pem" "YOUR-PC-PATH"
-```
-- In my case, it looks like this
-```
-copy "\\wsl$\Ubuntu\home\zun24\rl-swarm\swarm.pem" "C:\Users\USER\Downloads"
-```
-
-## 🟢 Node Status
+## 🟢 Trạng thái node
 
 ### 1. Check Logs
-- To check whether your node is running or not, you can check logs
-- To check logs you need to re-attach with screen session, so use the below command
+Mục đích: Check trạng thái node chạy
+Sử dụng lệnh sau
 ```
 screen -r gensyn
 ```
-- If you see everything running then it's fine
-- Now detach from this screen session, Use `Ctrl + A` and then press `D` to detach from this screen session.
-- Everytime you reattach, every time you should detach
-
+Dùng lệnh Ctr+A+D để detach màn đang chạy
 ### 2. Check Wins
-- Visit : https://gensyn-node.vercel.app/
-- Enter Peer-ID that you often see this in your logs
-- The more win, the better
+- Vào link : https://gensyn-node.vercel.app/
+- Nhập mã Peer-ID 
 
-> [!Note]
-> If you see `0x0000000000000000000000000000000000000000` in `Connected EOA Address` section, that means your contribution is not being recorded, so you should run the node from beginning with fresh new email (means u need to delete existing `swarm.pem` file
+> [!Chú ý]
+> Nếu nhìn thấy `0x0000000000000000000000000000000000000000` in `Connected EOA Address` section, Có nghĩa là node đang chưa đc track. Thì quay thực hiện 1. Recover node phía trên; 2. Nhập đúng email cũ.
 
 ## ⚠️ Troubleshooting
 
-### 🔴 Daemon failed to start in 15.0 seconds
-- If you are facing this issue then follow this step by step guide
-- First use tihs command
+### 🔴 Lỗi Daemon failed to start in 15.0 seconds
+Xử lý:
 ```
 nano $(python3 -c "import hivemind.p2p.p2p_daemon as m; print(m.__file__)")
 ```
-- Then scroll down and look for this line `startup_timeout: float = 15,` , here u need to modify this 15 with 120, and after modifying it will look like this : `startup_timeout: float = 120,`
-- Save this changes, first use `Ctrl` + `X` and then press `Y` and then press `Enter`
-- Now use this command again to run `rl-swarm`
+- Tìm đến dòng `startup_timeout: float = 15,` , Sửa 15 thành 120.
+- Lưu thay đổi `Ctrl` + `X` nhấn `Y` and rồi nhấn `Enter`
+- Sau đó chạy lại node bằng lệnh:
 ```bash
 ./run_rl_swarm.sh
 ```
