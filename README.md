@@ -24,27 +24,8 @@ sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl wge
 ```bash
 curl -sSL https://raw.githubusercontent.com/zunxbt/installation/main/node.sh | bash
 ```
-**4. Tạo `screen` session**
-```bash
-screen -S gensyn
-```
-**5. Chạy node**
-- Clone git
-```bash
-cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git
-cd rl-swarm
-```
-**6. Tạo Screen session**
-```bash
-screen -S gensyn
-```
-**7. Kích hoạt venv**
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-**8. Cài đặt nvidia-msi DRIVER (Trường hợp chạy bằng GPU nhưng WSL chưa nhận). (OPTIONAL)**
-Chọn 1 trong các lệnh sau tùy theo phiên bản GPU 
+**4. Cài đặt nvidia-msi DRIVER (OPTIONAL)**
+**Chọn 1 trong các lệnh sau tùy theo phiên bản GPU **
 ```bash
 sudo apt install nvidia-utils-525         # version 525.147.05-0ubuntu1, or
 ```
@@ -75,14 +56,42 @@ sudo apt install nvidia-utils-570-server  # version 570.86.15-0ubuntu0.24.04.4
 ```bash
 sudo apt install nvidia-utils-550-server  # version 550.144.03-0ubuntu0.24.04.1
 ```
+**Sau khi cài xong driver nvidia thì check lại như sau:**
+```bash
+nvidia-smi
+```
+Kết quả hiển thị là thành công nếu gồm các thông tin: 
+Driver Version: 5xx.xx
+CUDA Version: 12.x
+
+**5. Tạo `screen` session**
+```bash
+screen -S gensyn
+```
+**6. Chạy node**
+- Clone git
+```bash
+cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git
+cd rl-swarm
+```
+**7. Tạo Screen session**
+```bash
+screen -S gensyn
+```
+**8. Kích hoạt venv**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 **9. Cấu hình gpu_memory_utilization (OPTIONAL)**
-Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks. Try increasing gpu_memory_utilization when initializing the engine. Thì cần tăng chỉ số mặc định gpu_memory_utilization từ 0.2 lên 0.5 
+Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks => cần điều chỉnh cấu hình của gpu_memory_utilization 
 Từ thư mục hệ thống ~/rl-swarm$, nhấn lệnh sau:
 ```bash
 nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
 ```
-Tìm đến dòng gpu_memory_utilization, chỉnh từ 
- Chạy node
+Tìm đến dòng gpu_memory_utilization, chỉnh từ 0.2 thành 0.4 hoặc 0.5
+Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
+**10. Chạy node**
 ```bash
 ./run_rl_swarm.sh
 ```
@@ -92,7 +101,7 @@ Tìm đến dòng gpu_memory_utilization, chỉnh từ
 
 ![Screenshot 2025-04-01 061641](https://github.com/user-attachments/assets/b5ed9645-16a2-4911-8a73-97e21fdde274)
 
-7. **Detach from `screen session`**
+11. **Detach from `screen session`**
 - Use `Ctrl + A` and then press `D` to detach from this screen session.
 
  ## 🔄️ Back up `swarm.pem`
