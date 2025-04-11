@@ -86,6 +86,7 @@ nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
 ```
 - Tìm đến dòng gpu_memory_utilization, chỉnh từ 0.2 thành 0.4 hoặc 0.5
 - Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
+
 **9. Chạy node**
 ```bash
 ./run_rl_swarm.sh
