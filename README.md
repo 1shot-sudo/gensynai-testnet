@@ -97,9 +97,6 @@ nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
 
 ![Screenshot 2025-04-01 061641](https://github.com/user-attachments/assets/b5ed9645-16a2-4911-8a73-97e21fdde274)
 
-10. **Detach from `screen session`**
-- Use `Ctrl + A` and then press `D` to detach from this screen session.
-
  ## 🔄️ Back up `swarm.pem`
 - Mục đích: Sau khi Node Gensyn chạy, thì việc lưu file swarm.pem để backup là rất quan trọng. Nếu không, khi khởi động lại node thì sẽ mất hết toàn bộ dữ liệu đã chạy.
 
