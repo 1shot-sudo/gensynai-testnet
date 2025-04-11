@@ -10,25 +10,25 @@
 | **Python Version**                  | Python >= 3.10 (For Mac, you may need to upgrade)           |
 
 
-## 📥 Installation
+## 📥 Hướng dẫn cài đặt
 
-1. **Install `sudo`**
+1. **Cài đặt `sudo`**
 ```bash
-apt update && apt install -y sudo
+sudo apt update && apt install -y
 ```
-2. **Install other dependencies**
+2. **Cài đặt các dependencies khác**
 ```bash
 sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl wget screen git lsof nano unzip
 ```
-3. **Install Node.js and npm**  
+3. **Cài đặt Node.js and npm**  
 ```bash
 curl -sSL https://raw.githubusercontent.com/zunxbt/installation/main/node.sh | bash
 ```
-4. **Create a `screen` session**
+4. **Tạo `screen` session**
 ```bash
 screen -S gensyn
 ```
-5. **Run the swarm**
+5. **Chạy node**
 ```bash
 cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git && chmod +x gensyn-testnet/gensyn.sh && ./gensyn-testnet/gensyn.sh
 ```
