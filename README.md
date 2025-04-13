@@ -78,7 +78,14 @@ screen -S gensyn
 python3 -m venv .venv
 source .venv/bin/activate
 ```
-**8. Cấu hình gpu_memory_utilization (OPTIONAL)**
+**8. Cài PyTorch trong venv với CUDA support (OPTIONAL)**
+```bash
+pip install --upgrade pip
+pip uninstall torch -y
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
+
+**9. Cấu hình gpu_memory_utilization (OPTIONAL)**
 - Mục đích: Một số máy cấu hình thấp yêu cầu VRAM, RAM nên xảy ra tình trạng lỗi: ValueError: No available memory for the cache blocks => cần điều chỉnh cấu hình của gpu_memory_utilization 
 - Từ thư mục hệ thống ~/rl-swarm$, nhấn lệnh sau:
 ```bash
@@ -87,7 +94,7 @@ nano hivemind_exp/configs/gpu/grpo-qwen-2.5-0.5b-deepseek-r1.yaml
 - Tìm đến dòng gpu_memory_utilization, chỉnh từ 0.2 thành 0.4 hoặc 0.5
 - Sau đó ấn Ctr+X, nhấn Y, và nhấn Enter
 
-**9. Chạy node**
+**10. Chạy node**
 ```bash
 ./run_rl_swarm.sh
 ```
