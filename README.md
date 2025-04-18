@@ -66,7 +66,7 @@ CUDA Version: 12.x
 
 **5. Clone git**
 ```bash
-cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git
+cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git && chmod +x gensyn-testnet/gensyn.sh && ./gensyn-testnet/gensyn.sh
 cd rl-swarm
 ```
 **6. Tạo Screen session**
@@ -150,6 +150,9 @@ Dùng lệnh Ctr+A+D để detach màn đang chạy
 - Vào link : https://gensyn-node.vercel.app/
 - Nhập mã Peer-ID 
 
+### 3. Check và rewards
+- Truy cập tele bot: @gensynImpek_bot
+- Nhập mã Peer-ID, nodename, evm address
 > [!Chú ý]
 > Nếu nhìn thấy `0x0000000000000000000000000000000000000000` in `Connected EOA Address` section, Có nghĩa là node đang chưa đc track. Thì quay thực hiện 1. Recover node phía trên; 2. Nhập đúng email cũ.
 
@@ -166,3 +169,27 @@ nano $(python3 -c "import hivemind.p2p.p2p_daemon as m; print(m.__file__)")
 ```bash
 ./run_rl_swarm.sh
 ```
+### 🔴 Lỗi AttributeError: 'NoneType' object has no attribute 'split'
+Xử lý
+Truy cập file lỗi:
+```
+cd rl-swarm
+nano hivemind_exp/gsm8k/stage2_rewards.py
+```
+Tại đây tìm đến dòng def extract_xml_ids:
+1. Xóa đoạn code hiện tại.
+2. Copy đoạn code bên dưới
+```
+def extract_xml_ids(text: str) -> list[str]:
+    if not text or "<student>" not in text:
+        return []
+
+    ids = []
+    ids_raw = text.split("<student>")[1:]
+    for id in ids_raw:
+        ids.append(id.split("</student>")[0].strip())
+    return ids
+```
+3. Nhấn Ctr+O -> Y -> Enter
+4. Ctrl+x
+5. Restart node
