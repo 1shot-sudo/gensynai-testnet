@@ -176,7 +176,7 @@ Truy cập file lỗi:
 cd rl-swarm
 nano hivemind_exp/gsm8k/stage2_rewards.py
 ```
-Tại đây tìm đến dòng def extract_xml_ids, nó sẽ có dạng thế này:
+Tại đây tìm đến dòng **def extract_xml_ids**
 1. Xóa đoạn code hiện tại.
 2. Copy đoạn code bên dưới
 ```
