@@ -196,13 +196,6 @@ def extract_xml_ids(text: str) -> list[str]:
 
 ### 🔴 Lỗi KeyError: 'question'
 Xử lý: 
-I. Cách 1: Cập nhật rl-swarm: 
-```
-cd rl-swarm
-git pull
-```
-- Restart lại
-II. Cách 2: Sửa file lỗi:
 1. Truy cập file lỗi - stage_utils:
 ```
 cd rl-swarm
@@ -214,3 +207,9 @@ Nhấn Ctr+W để hiện thị công cụ tìm kiếm, sau đó gõ: **{"role":
 4. Ctr+O -> Enter
 5. Ctr+X
 6. Restart
+7. Nếu sau khi thực hiện vẫn không thành công: Thực hiện update lại
+```
+cd rl-swarm
+git pull
+```
+Sau đó restart lại
