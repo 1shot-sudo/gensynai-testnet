@@ -196,7 +196,7 @@ def extract_xml_ids(text: str) -> list[str]:
 
 ### 🔴 Lỗi KeyError: 'question'
 Xử lý: 
-1. Truy cập file lỗi:
+1. Truy cập file lỗi - stage_utils:
 ```
 cd rl-swarm
 nano hivemind_exp/gsm8k/stage_utils.py
