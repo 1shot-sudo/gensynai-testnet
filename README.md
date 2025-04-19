@@ -196,14 +196,14 @@ def extract_xml_ids(text: str) -> list[str]:
 
 ### 🔴 Lỗi KeyError: 'question'
 Xử lý: 
-- Cách 1: Cập nhật rl-swarm: 
+I. Cách 1: Cập nhật rl-swarm: 
 ```
 cd rl-swarm
 git pull
 ```
 - Restart lại
-- Cách 2: Sửa file lỗi:
-- 1. Truy cập file lỗi - stage_utils:
+II. Cách 2: Sửa file lỗi:
+1. Truy cập file lỗi - stage_utils:
 ```
 cd rl-swarm
 nano hivemind_exp/gsm8k/stage_utils.py
