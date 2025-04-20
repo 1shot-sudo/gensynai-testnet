@@ -193,23 +193,3 @@ def extract_xml_ids(text: str) -> list[str]:
 3. Nhấn Ctr+O -> Enter
 4. Ctrl+x
 5. Restart node
-
-### 🔴 Lỗi KeyError: 'question'
-Xử lý: 
-1. Truy cập file lỗi - stage_utils:
-```
-cd rl-swarm
-nano hivemind_exp/gsm8k/stage_utils.py
-```
-2. Tìm đến dòng lỗi: 
-Nhấn Ctr+W để hiện thị công cụ tìm kiếm, sau đó gõ: **{"role": "system", "content": output["question"]},**
-3. Xóa đoạn lỗi đó và thay bằng: **{"role": "system", "content": output.get("question", output.get("prompt", ""))},**
-4. Ctr+O -> Enter
-5. Ctr+X
-6. Restart
-7. Nếu sau khi thực hiện vẫn không thành công: Thực hiện update lại
-```
-cd rl-swarm
-git pull
-```
-Sau đó restart lại
