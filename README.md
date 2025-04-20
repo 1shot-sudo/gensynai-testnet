@@ -1,4 +1,4 @@
-<h2 align=center>Gensyn Testnet Node Guide chạy bằng WSL máy cá nhân</h2>
+<h2 align=center>Gensyn Testnet Node Guide chạy bằng WSL máy cá nhân - GPU</h2>
 
 ## 💻 Yêu cầu hệ thống
 
