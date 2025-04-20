@@ -66,7 +66,7 @@ CUDA Version: 12.x
 
 **5. Clone git**
 ```bash
-cd $HOME && rm -rf gensyn-testnet && git clone https://github.com/zunxbt/gensyn-testnet.git && chmod +x gensyn-testnet/gensyn.sh && ./gensyn-testnet/gensyn.sh
+git clone https://github.com/gensyn-ai/rl-swarm
 cd rl-swarm
 ```
 **6. Tạo Screen session**
