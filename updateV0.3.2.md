@@ -3,7 +3,7 @@
  1. Download file upload về máy cá nhân
  - Link: https://github.com/gensyn-ai/rl-swarm/releases/tag/v0.3.2
  - Chạy bằng wsl thì down bản này 
- https://github.com/1shot-sudo/gensynai-testnet/blob/587f4ec0ed15193920c2700ac304b1db8c2dddb3/Screenshot_3.png
+ ![Screenshot 2025-04-21 075405](https://github.com/1shot-sudo/gensynai-testnet/blob/587f4ec0ed15193920c2700ac304b1db8c2dddb3/Screenshot_3.png)
  
  2. Giải nén file
  Vào thư mục hệ thống, chạy lệnh giải nén.
