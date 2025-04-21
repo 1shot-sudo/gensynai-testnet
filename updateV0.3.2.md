@@ -10,7 +10,8 @@
  cd rl-swarm
  tar -xvzf /mnt/c/Users/namao/Downloads/rl-swarm-0.3.2.tar.gz
  ```
- Trong đó: c/Users/namao/Downloads/rl-swarm-0.3.2.tar.gz là đường dẫn đến file download về. Đổi tên user <namao> và tên ổ đĩa <C> để phù hợp với đường dẫn của máy bạn.
+ Trong đó: c/Users/namao/Downloads/rl-swarm-0.3.2.tar.gz là đường dẫn đến file download về. Đổi tên user <namao> và tên ổ đĩa <C> để phù hợp với đường dẫn của máy bạn
+ 
  3. Chạy lại node
  
  ```
